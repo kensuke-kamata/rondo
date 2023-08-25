@@ -5,9 +5,13 @@ class Variable:
 
 if __name__ == '__main__':
     import numpy as np
-    from function import Square
 
-    x = Variable(np.array(10))
-    f = Square()
-    y = f(x)
-    print(y.data)
+    from function import *
+    A = Square()
+    B = Exp()
+
+    x = Variable(np.array(0.5))
+    a = A(x)
+    b = B(a)
+    c = A(b)
+    print(c.data)

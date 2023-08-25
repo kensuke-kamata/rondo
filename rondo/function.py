@@ -1,3 +1,5 @@
+import numpy as np
+
 from variable import Variable
 
 class Function:
@@ -13,3 +15,7 @@ class Function:
 class Square(Function):
     def forward(self, x):
         return x ** 2
+
+class Exp(Function):
+    def forward(self, x):
+        return np.exp(x)
