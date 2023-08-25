@@ -9,3 +9,6 @@ class Square(Function):
         x = self.input.data
         gx = 2 * x *gy
         return gx
+
+def square(x):
+    return Square()(x)
