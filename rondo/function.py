@@ -1,6 +1,5 @@
-import numpy as np
-
-from variable import Variable
+import rondo
+from rondo.variable import Variable
 
 class Function:
     def __call__(self, input):
@@ -12,10 +11,3 @@ class Function:
     def forward(self, x):
         raise NotImplementedError()
 
-class Square(Function):
-    def forward(self, x):
-        return x ** 2
-
-class Exp(Function):
-    def forward(self, x):
-        return np.exp(x)
