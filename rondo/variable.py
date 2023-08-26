@@ -1,3 +1,4 @@
+import heapq
 import numpy
 
 import rondo
@@ -10,17 +11,26 @@ class Variable:
         self.data = data
         self.grad = None
         self.creator = None
+        self.generation = 0
 
     def set_creator(self, func):
         self.creator = func
+        self.generation = func.generation + 1
 
     def backward(self):
         if self.grad is None:
             self.grad = numpy.ones_like(self.data)
 
-        funcs = [self.creator]
+        # Initialize the priority queue with the creator of the current Variable.
+        # We use negative generation values because heapq pops the smallest value first,
+        # so by storing negative values, we can retrieve the function with the largest generation first.
+        funcs = [(-self.creator.generation, self.creator)]
+        seen_set = set()
+        seen_set.add(self.creator)
+
         while funcs:
-            f = funcs.pop()
+            _, f = heapq.heappop(funcs)
+
             gys = [output.grad for output in f.outputs]
             gxs = f.backward(*gys)
             if not isinstance(gxs, tuple):
@@ -31,8 +41,9 @@ class Variable:
                     input.grad = gx
                 else:
                     input.grad = input.grad + gx
-                if input.creator is not None:
-                    funcs.append(input.creator)
+                if input.creator is not None and input.creator not in seen_set:
+                    heapq.heappush(funcs, (-input.creator.generation, input.creator))
+                    seen_set.add(input.creator)
 
     def cleargrad(self):
         self.grad = None
