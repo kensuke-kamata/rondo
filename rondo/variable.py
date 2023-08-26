@@ -17,7 +17,7 @@ class Variable:
         self.creator = func
         self.generation = func.generation + 1
 
-    def backward(self):
+    def backward(self, retain_grad=False):
         if self.grad is None:
             self.grad = numpy.ones_like(self.data)
 
@@ -47,6 +47,13 @@ class Variable:
                 if input.creator is not None and input.creator not in seen_set:
                     heapq.heappush(funcs, (-input.creator.generation, input.creator))
                     seen_set.add(input.creator)
+
+            # Clear the gradient data from the Function's outputs to optimize memory usage.
+            # This reduces the  memory footprint when not required to retain intermediate gradient data.
+            # However, if the user specifies `retain_grad=True`, the gradients will be retained.
+            if not retain_grad:
+                for output in f.outputs:
+                    output().grad = None
 
     def cleargrad(self):
         self.grad = None
