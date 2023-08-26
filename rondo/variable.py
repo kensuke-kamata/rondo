@@ -31,7 +31,10 @@ class Variable:
         while funcs:
             _, f = heapq.heappop(funcs)
 
-            gys = [output.grad for output in f.outputs]
+            # Retrieve the gradients from the function's outputs.
+            # Since the references to outputs are from the Function are weak,
+            # we need to dereference them (using output()) to access the actual Variable objects and their gradients.
+            gys = [output().grad for output in f.outputs]
             gxs = f.backward(*gys)
             if not isinstance(gxs, tuple):
                 gxs = (gxs,)

@@ -1,3 +1,5 @@
+import weakref
+
 import rondo
 from rondo.variable import Variable
 from rondo.utils import as_array
@@ -19,7 +21,9 @@ class Function:
             output.set_creator(self)
 
         self.inputs = inputs
-        self.outputs = outputs
+
+        # Use weak references for the outputs to avoid circular references.
+        self.outputs = [weakref.ref(output) for output in outputs]
 
         # If there's only one output, return it directly. Otherwise, return the tuple of outputs.
         return outputs if len(outputs) > 1 else outputs[0]
