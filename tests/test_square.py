@@ -10,20 +10,23 @@ class SquareTest(unittest.TestCase):
     def test_forward(self):
         x = Variable(numpy.array(2.0))
         y = square(x)
-        expected = numpy.array(4.0)
-        self.assertEqual(y.data, expected)
+        result = y.data
+        expect = numpy.array(4.0)
+        self.assertEqual(result, expect)
 
     def test_backward(self):
         x = Variable(numpy.array(3.0))
         y = square(x)
         y.backward()
-        expected = numpy.array(6.0)
-        self.assertEqual(x.grad, expected)
+        result = x.grad
+        expect = numpy.array(6.0)
+        self.assertEqual(result, expect)
 
     def test_gradient(self):
         x = Variable(numpy.random.rand(1))
         y = square(x)
         y.backward()
-        numgrad = numerical_diff(square, x)
-        isclose = numpy.allclose(x.grad, numgrad)
+        grad_back = x.grad
+        grad_num = numerical_diff(square, x)
+        isclose = numpy.allclose(grad_back, grad_num)
         self.assertTrue(isclose)
