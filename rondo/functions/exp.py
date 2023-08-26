@@ -8,7 +8,7 @@ class Exp(Function):
         return numpy.exp(x)
 
     def backward(self, gy):
-        x = self.input.data
+        x = self.inputs[0].data
         gx = numpy.exp(x) * gy
         return gx
 
