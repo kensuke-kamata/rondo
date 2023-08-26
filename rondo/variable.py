@@ -27,6 +27,12 @@ class Variable:
                 gxs = (gxs,)
 
             for input, gx in zip(f.inputs, gxs):
-                input.grad = gx
+                if input.grad is None:
+                    input.grad = gx
+                else:
+                    input.grad = input.grad + gx
                 if input.creator is not None:
                     funcs.append(input.creator)
+
+    def cleargrad(self):
+        self.grad = None
