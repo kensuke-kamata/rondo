@@ -1,7 +1,5 @@
 import numpy
 
-import rondo
-
 def as_array(x):
     if numpy.isscalar(x):
         return numpy.array(x)
