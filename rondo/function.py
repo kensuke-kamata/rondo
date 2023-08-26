@@ -1,15 +1,12 @@
 import weakref
 
 import rondo
+from rondo.config import Config
 from rondo.variable import Variable
 from rondo.utils import as_array
 
 class Function:
     def __call__(self, *inputs):
-        # Calculate the generation for this function besed on its inputs.
-        # This generation will be used to prioritize the function's backward computation.
-        self.generation = max([input.generation for input in inputs])
-
         xs = [input.data for input in inputs]
         ys = self.forward(*xs)
         if not isinstance(ys, tuple):
@@ -17,8 +14,13 @@ class Function:
 
         # Convert ys to Variable instnces and set their creators to this function.
         outputs = [Variable(as_array(y)) for y in ys]
-        for output in outputs:
-            output.set_creator(self)
+
+        if Config.enable_backprop:
+            # Calculate the generation for this function besed on its inputs.
+            # This generation will be used to prioritize the function's backward computation.
+            self.generation = max([input.generation for input in inputs])
+            for output in outputs:
+                output.set_creator(self)
 
         self.inputs = inputs
 
