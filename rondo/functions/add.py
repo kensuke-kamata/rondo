@@ -10,4 +10,5 @@ class Add(Function):
         return (gy, gy)
 
 def add(x0, x1):
+    x1 = rondo.as_array(x1)
     return Add()(x0, x1)
