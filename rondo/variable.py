@@ -39,6 +39,10 @@ class Variable:
         from rondo.functions import mul
         return mul(self, other)
 
+    def __neg__(self):
+        from rondo.functions import neg
+        return neg(self)
+
     @property
     def shape(self):
         return self.data.shape
