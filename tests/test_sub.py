@@ -6,7 +6,7 @@ from rondo.variable import Variable
 from rondo.functions import sub
 from rondo.utils import numerical_diff
 
-class MulTest(unittest.TestCase):
+class SubTest(unittest.TestCase):
     def setUp(self):
         self.x0 = Variable(numpy.array(2.0))
         self.x1 = Variable(numpy.array(3.0))

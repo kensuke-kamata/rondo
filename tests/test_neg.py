@@ -6,7 +6,7 @@ from rondo.variable import Variable
 from rondo.functions import neg
 from rondo.utils import numerical_diff
 
-class MulTest(unittest.TestCase):
+class NegTest(unittest.TestCase):
     def setUp(self):
         self.x = Variable(numpy.array(2.0))
         self.y = neg(self.x)
