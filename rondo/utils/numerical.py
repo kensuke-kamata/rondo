@@ -5,6 +5,8 @@ def numerical_diff(f, *inputs, eps=1e-4):
     grads = []
     inputs = list(inputs)
     for i, input in enumerate(inputs):
+        if not isinstance(input, Variable):
+            continue
         tmp0 = inputs.copy()
         tmp1 = inputs.copy()
         x0 = Variable(rondo.as_array(input.data - eps))

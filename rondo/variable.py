@@ -51,6 +51,18 @@ class Variable:
         from rondo.functions import rsub
         return rsub(self, other)
 
+    def __truediv__(self, other):
+        from rondo.functions import div
+        return div(self, other)
+
+    def __rtruediv__(self, other):
+        from rondo.functions import rdiv
+        return rdiv(self, other)
+
+    def __pow__(self, other):
+        from rondo.functions import pow
+        return pow(self, other)
+
     @property
     def shape(self):
         return self.data.shape
