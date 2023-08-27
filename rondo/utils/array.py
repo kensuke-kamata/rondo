@@ -1,10 +1,5 @@
 import numpy
 
-def as_array(x):
-    if numpy.isscalar(x):
-        return numpy.array(x)
-    return x
-
 def as_vec(x):
     if not isinstance(x, numpy.ndarray):
         raise TypeError('{} is not supported'.format(type(x)))

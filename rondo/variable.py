@@ -1,9 +1,9 @@
 import heapq
 import numpy
 
-import rondo
-
 class Variable:
+    __array_priority__ = 200
+
     def __init__(self, data, name=None):
         if data is not None:
             if not isinstance(data, numpy.ndarray):
@@ -22,6 +22,22 @@ class Variable:
             return 'Variable(None)'
         p = str(self.data).replace('\n', '\n' +  ' ' * 9)
         return 'Variable(' + p + ')'
+
+    def __add__(self, other):
+        from rondo.functions import add
+        return add(self, other)
+
+    def __radd__(self, other):
+        from rondo.functions import add
+        return add(self, other)
+
+    def __mul__(self, other):
+        from rondo.functions import mul
+        return mul(self, other)
+
+    def __rmul__(self, other):
+        from rondo.functions import mul
+        return mul(self, other)
 
     @property
     def shape(self):
@@ -83,3 +99,13 @@ class Variable:
 
     def cleargrad(self):
         self.grad = None
+
+def as_array(x):
+    if numpy.isscalar(x):
+        return numpy.array(x)
+    return x
+
+def as_variable(obj):
+    if isinstance(obj, Variable):
+        return obj
+    return Variable(obj)

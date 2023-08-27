@@ -3,17 +3,19 @@ import weakref
 import rondo
 from rondo.config import Config
 from rondo.variable import Variable
-from rondo.utils import as_array
 
 class Function:
     def __call__(self, *inputs):
+        # Convert any input ndarrays to Variable instances to ensure consistent handling.
+        inputs = [rondo.as_variable(input) for input in inputs]
+
         xs = [input.data for input in inputs]
         ys = self.forward(*xs)
         if not isinstance(ys, tuple):
             ys = (ys,)
 
         # Convert ys to Variable instnces and set their creators to this function.
-        outputs = [Variable(as_array(y)) for y in ys]
+        outputs = [Variable(rondo.as_array(y)) for y in ys]
 
         if Config.enable_backprop:
             # Calculate the generation for this function besed on its inputs.

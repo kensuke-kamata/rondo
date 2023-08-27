@@ -1,6 +1,5 @@
 import rondo
 from rondo.variable import Variable
-from rondo.utils import as_array
 
 def numerical_diff(f, *inputs, eps=1e-4):
     grads = []
@@ -8,8 +7,8 @@ def numerical_diff(f, *inputs, eps=1e-4):
     for i, input in enumerate(inputs):
         tmp0 = inputs.copy()
         tmp1 = inputs.copy()
-        x0 = Variable(as_array(input.data - eps))
-        x1 = Variable(as_array(input.data + eps))
+        x0 = Variable(rondo.as_array(input.data - eps))
+        x1 = Variable(rondo.as_array(input.data + eps))
         tmp0[i] = x0
         tmp1[i] = x1
         y0 = f(*tmp0)
