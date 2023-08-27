@@ -43,6 +43,14 @@ class Variable:
         from rondo.functions import neg
         return neg(self)
 
+    def __sub__(self, other):
+        from rondo.functions import sub
+        return sub(self, other)
+
+    def __rsub__(self, other):
+        from rondo.functions import rsub
+        return rsub(self, other)
+
     @property
     def shape(self):
         return self.data.shape
