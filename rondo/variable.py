@@ -85,7 +85,7 @@ class Variable:
 
     def backward(self, retain_grad=False):
         if self.grad is None:
-            self.grad = numpy.ones_like(self.data)
+            self.grad = Variable(numpy.ones_like(self.data))
 
         # Initialize the priority queue with the creator of the current Variable.
         # We use negative generation values because heapq pops the smallest value first,
