@@ -1,6 +1,8 @@
 import heapq
 import numpy
 
+import rondo
+
 class Variable:
     __array_priority__ = 200
 
@@ -83,7 +85,7 @@ class Variable:
         self.creator = func
         self.generation = func.generation + 1
 
-    def backward(self, retain_grad=False):
+    def backward(self, retain_grad=False, create_graph=False):
         if self.grad is None:
             self.grad = Variable(numpy.ones_like(self.data))
 
@@ -101,18 +103,20 @@ class Variable:
             # Since the references to outputs are from the Function are weak,
             # we need to dereference them (using output()) to access the actual Variable objects and their gradients.
             gys = [output().grad for output in f.outputs]
-            gxs = f.backward(*gys)
-            if not isinstance(gxs, tuple):
-                gxs = (gxs,)
+            with rondo.using('enable_backprop', create_graph):
+                gxs = f.backward(*gys)
+                if not isinstance(gxs, tuple):
+                    gxs = (gxs,)
 
-            for input, gx in zip(f.inputs, gxs):
-                if input.grad is None:
-                    input.grad = gx
-                else:
-                    input.grad = input.grad + gx
-                if input.creator is not None and input.creator not in seen_set:
-                    heapq.heappush(funcs, (-input.creator.generation, input.creator))
-                    seen_set.add(input.creator)
+                for input, gx in zip(f.inputs, gxs):
+                    if input.grad is None:
+                        input.grad = gx
+                    else:
+                        input.grad = input.grad + gx
+
+                    if input.creator is not None and input.creator not in seen_set:
+                        heapq.heappush(funcs, (-input.creator.generation, input.creator))
+                        seen_set.add(input.creator)
 
             # Clear the gradient data from the Function's outputs to optimize memory usage.
             # This reduces the  memory footprint when not required to retain intermediate gradient data.
