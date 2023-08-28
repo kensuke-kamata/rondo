@@ -8,3 +8,5 @@ from rondo.functions.pow import pow
 from rondo.functions.square import square
 from rondo.functions.sub import sub
 from rondo.functions.sub import rsub
+from rondo.functions.trig import sin
+from rondo.functions.trig import taylor_sin
