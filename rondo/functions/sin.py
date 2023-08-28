@@ -3,6 +3,7 @@ import math
 
 import rondo
 from rondo.function import Function
+from rondo.functions import cos
 
 class Sin(Function):
     def forward(self, x):
@@ -10,8 +11,8 @@ class Sin(Function):
         return y
 
     def backward(self, gy):
-        x = self.inputs[0].data
-        gx = gy * numpy.cos(x)
+        x, = self.inputs
+        gx = gy * cos(x)
         return gx
 
 def sin(x):
