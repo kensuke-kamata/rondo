@@ -3,7 +3,6 @@ import math
 
 import rondo
 from rondo.function import Function
-from rondo.functions import cos
 
 class Sin(Function):
     def forward(self, x):
@@ -27,3 +26,16 @@ def taylor_sin(x, threshold=1e-150):
         if abs(t.data) < threshold:
             break
     return y
+
+class Cos(Function):
+    def forward(self, x):
+        y = numpy.cos(x)
+        return y
+
+    def backward(self, gy):
+        x, = self.inputs
+        gx = gy * -sin(x)
+        return gx
+
+def cos(x):
+    return Cos()(x)
