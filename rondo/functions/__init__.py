@@ -11,3 +11,4 @@ from rondo.functions.sub import rsub
 from rondo.functions.trigonometry import sin
 from rondo.functions.trigonometry import taylor_sin
 from rondo.functions.trigonometry import cos
+from rondo.functions.trigonometry import tanh
