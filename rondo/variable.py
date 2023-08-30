@@ -81,10 +81,17 @@ class Variable:
     def dtype(self):
         return self.data.dtype
 
+    @property
+    def T(self):
+        return rondo.functions.transpose(self)
+
     def reshape(self, *shape):
         if len(shape) == 1 and isinstance(shape[0], (tuple, list)):
             shape = shape[0]
         return rondo.functions.reshape(self, shape)
+
+    def transpose(self):
+        return rondo.functions.transpose(self)
 
     def set_creator(self, func):
         self.creator = func

@@ -9,6 +9,7 @@ from rondo.functions.reshape import reshape
 from rondo.functions.square import square
 from rondo.functions.sub import sub
 from rondo.functions.sub import rsub
+from rondo.functions.transpose import transpose
 from rondo.functions.trigonometry import sin
 from rondo.functions.trigonometry import taylor_sin
 from rondo.functions.trigonometry import cos
