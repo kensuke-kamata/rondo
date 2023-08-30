@@ -90,8 +90,13 @@ class Variable:
             shape = shape[0]
         return rondo.functions.reshape(self, shape)
 
-    def transpose(self):
-        return rondo.functions.transpose(self)
+    def transpose(self, *axes):
+        if len(axes) == 0:
+            axes = None
+        elif len(axes) == 1:
+            if isinstance(axes[0], (tuple, list)) or axes[0] is None:
+                axes = axes[0]
+        return rondo.functions.transpose(self, axes)
 
     def set_creator(self, func):
         self.creator = func
