@@ -15,6 +15,10 @@ class Transpose(Function):
         if self.axes is None:
             return transpose(gy)
         axes_len = len(self.axes)
+        # Compute the inverse permutation:
+        #   Use numpy.argsort to find the indices that would sort the adjusted axes.
+        #   This gives the inverse permutation required to
+        #   reverse the transpose operation performed in the forward pass.
         inv_axes = tuple(numpy.argsort([ax % axes_len for ax in self.axes]))
         return transpose(gy, inv_axes)
 
