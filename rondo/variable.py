@@ -140,6 +140,9 @@ class Variable:
     def cleargrad(self):
         self.grad = None
 
+class Parameter(Variable):
+    pass
+
 def as_array(x):
     if numpy.isscalar(x):
         return numpy.array(x)

@@ -1,4 +1,5 @@
 from rondo.variable import Variable
+from rondo.variable import Parameter
 from rondo.variable import as_array
 from rondo.variable import as_variable
 
