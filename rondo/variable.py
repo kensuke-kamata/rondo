@@ -26,40 +26,31 @@ class Variable:
         return 'Variable(' + p + ')'
 
     def __add__(self, other):
-        from rondo.functions import add
-        return add(self, other)
+        return rondo.functions.add(self, other)
 
     def __radd__(self, other):
-        from rondo.functions import add
-        return add(self, other)
+        return rondo.functions.add(self, other)
 
     def __mul__(self, other):
-        from rondo.functions import mul
-        return mul(self, other)
+        return rondo.functions.mul(self, other)
 
     def __rmul__(self, other):
-        from rondo.functions import mul
-        return mul(self, other)
+        return rondo.functions.mul(self, other)
 
     def __neg__(self):
-        from rondo.functions import neg
-        return neg(self)
+        return rondo.functions.neg(self)
 
     def __sub__(self, other):
-        from rondo.functions import sub
-        return sub(self, other)
+        return rondo.functions.sub(self, other)
 
     def __rsub__(self, other):
-        from rondo.functions import rsub
-        return rsub(self, other)
+        return rondo.functions.rsub(self, other)
 
     def __truediv__(self, other):
-        from rondo.functions import div
-        return div(self, other)
+        return rondo.functions.div(self, other)
 
     def __rtruediv__(self, other):
-        from rondo.functions import rdiv
-        return rdiv(self, other)
+        return rondo.functions.rdiv(self, other)
 
     def __pow__(self, other):
         from rondo.functions import pow
@@ -97,6 +88,9 @@ class Variable:
             if isinstance(axes[0], (tuple, list)) or axes[0] is None:
                 axes = axes[0]
         return rondo.functions.transpose(self, axes)
+
+    def sum(self, axis=None, keepdims=False):
+        return rondo.functions.sum(self, axis, keepdims)
 
     def set_creator(self, func):
         self.creator = func

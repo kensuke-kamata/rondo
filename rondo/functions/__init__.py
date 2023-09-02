@@ -1,4 +1,5 @@
 from rondo.functions.add import add
+from rondo.functions.broadcast import broadcast_to
 from rondo.functions.div import div
 from rondo.functions.div import rdiv
 from rondo.functions.exp import exp
@@ -9,6 +10,8 @@ from rondo.functions.reshape import reshape
 from rondo.functions.square import square
 from rondo.functions.sub import sub
 from rondo.functions.sub import rsub
+from rondo.functions.sum import sum
+from rondo.functions.sum import sum_to
 from rondo.functions.transpose import transpose
 from rondo.functions.trigonometry import sin
 from rondo.functions.trigonometry import taylor_sin
