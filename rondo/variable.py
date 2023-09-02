@@ -22,7 +22,8 @@ class Variable:
     def __repr__(self):
         if self.data is None:
             return 'Variable(None)'
-        p = str(self.data).replace('\n', '\n' +  ' ' * 9)
+        p = numpy.array2string(self.data, separator=', ')
+        p = p.replace('\n', '\n' +  ' ' * 9)
         return 'Variable(' + p + ')'
 
     def __add__(self, other):
