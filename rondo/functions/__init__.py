@@ -3,6 +3,7 @@ from rondo.functions.broadcast import broadcast_to
 from rondo.functions.div import div
 from rondo.functions.div import rdiv
 from rondo.functions.exp import exp
+from rondo.functions.matmul import matmul
 from rondo.functions.mul import mul
 from rondo.functions.neg import neg
 from rondo.functions.pow import pow
