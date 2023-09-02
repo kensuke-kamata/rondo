@@ -2,6 +2,8 @@ from rondo.functions.array.broadcast import broadcast_to
 from rondo.functions.array.reshape import reshape
 from rondo.functions.array.transpose import transpose
 
+from rondo.functions.loss.mean_squared_error import mean_squared_error
+
 from rondo.functions.math.add import add
 from rondo.functions.math.div import div
 from rondo.functions.math.div import rdiv
