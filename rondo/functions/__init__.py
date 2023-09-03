@@ -2,6 +2,7 @@ from rondo.functions.activation.relu import relu
 from rondo.functions.activation.sigmoid import sigmoid
 
 from rondo.functions.array.broadcast import broadcast_to
+from rondo.functions.array.get_item import get_item
 from rondo.functions.array.reshape import reshape
 from rondo.functions.array.transpose import transpose
 
