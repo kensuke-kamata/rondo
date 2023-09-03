@@ -5,18 +5,19 @@ import matplotlib.pyplot as plt
 
 import rondo.functions as F
 import rondo.models as M
+import rondo.optimizers as O
 
 # Generate toy dataset
 np.random.seed(0)
 x = np.random.rand(100, 1).astype(np.float32)
 y = np.sin(2 * np.pi * x) + np.random.rand(100, 1)
 
-model = M.MLP([10, 1])
+model     = M.MLP([10, 1])
+# optimizer = O.SGD(lr=0.2).setup(model)
+optimizer = O.MomentumSGD().setup(model)
 
-lr = 0.2      # Learning rate
-iters = 10000 # Number of iterations
-
-losses = [] # Store loss values for visualization
+iters  = 10000 # Number of iterations
+losses = []    # Store loss values for visualization
 for i in range(iters):
     y_pred = model(x)
     loss = F.mean_squared_error(y, y_pred)
@@ -24,8 +25,8 @@ for i in range(iters):
     model.cleargrads()
     loss.backward()
 
-    for p in model.params():
-        p.data -= lr * p.grad.data
+    # Update parameters using the optimizer
+    optimizer.update()
 
     if i % 1000 == 0:
         print(loss)
