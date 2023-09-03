@@ -1,5 +1,4 @@
 import os
-import datetime
 import subprocess
 
 def _dot_var(v, verbose=False):
@@ -24,22 +23,7 @@ def _dot_func(f):
         txt += dot_edge.format(id(f), id(y()))
     return txt
 
-def plot_dot_graph(output, verbose=True, to_file='graph.png'):
-    dir = '.graph'
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-    path_dot  = os.path.join(dir, 'graph.dot')
-    path_file = os.path.join(dir, to_file)
-
-    dot_graph = get_dot_graph(output, verbose)
-    with open(path_dot, 'w') as f:
-        f.write(dot_graph)
-
-    ext = os.path.splitext(to_file)[1][1:]
-    cmd = 'dot {} -T {} -o {}'.format(path_dot, ext, path_file)
-    subprocess.run(cmd, shell=True)
-
-def get_dot_graph(output, verbose=True):
+def graph(output, verbose=True):
     txt = ''
     funcs = []
     seen_set = set()
@@ -62,3 +46,18 @@ def get_dot_graph(output, verbose=True):
                 add_func(x.creator)
 
     return 'digraph g {\n' + txt + '}'
+
+def plot(output, verbose=True, to_file='graph.png'):
+    dir = '.graph'
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    path_dot  = os.path.join(dir, 'graph.dot')
+    path_file = os.path.join(dir, to_file)
+
+    g = graph(output, verbose)
+    with open(path_dot, 'w') as f:
+        f.write(g)
+
+    ext = os.path.splitext(to_file)[1][1:]
+    cmd = 'dot {} -T {} -o {}'.format(path_dot, ext, path_file)
+    subprocess.run(cmd, shell=True)
