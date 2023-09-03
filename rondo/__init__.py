@@ -4,6 +4,8 @@ from rondo.config import no_grad
 
 from rondo.layer import Layer
 
+from rondo.model import Model
+
 from rondo.variable import Variable
 from rondo.variable import Parameter
 from rondo.variable import as_array

@@ -9,41 +9,45 @@ import rondo.layers as L
 
 # Generate toy dataset
 np.random.seed(0)
-x = np.random.rand(100, 1)
+x = np.random.rand(100, 1).astype(np.float32)
 y = np.sin(2 * np.pi * x) + np.random.rand(100, 1)
 
-# Define the neural network
-l1 = L.Linear(10) # Output size
-l2 = L.Linear(1)
+class TwoLayerNet(rondo.Model):
+    def __init__(self, hidden_size, out_size):
+        super().__init__()
+        self.l1 = L.Linear(hidden_size)
+        self.l2 = L.Linear(out_size)
 
-# Prediction using the neural network
-def predict(x):
-    y = l1(x)
-    y = F.sigmoid(y)
-    y = l2(y)
-    return y
+    def forward(self, x):
+        h = self.l1(x)
+        h = F.sigmoid(h)
+        y = self.l2(h)
+        return y
+
+model = TwoLayerNet(10, 1)
 
 lr = 0.2      # Learning rate
 iters = 10000 # Number of iterations
 
 losses = [] # Store loss values for visualization
 for i in range(iters):
-    y_pred = predict(x)
+    y_pred = model(x)
     loss = F.mean_squared_error(y, y_pred)
 
-    l1.cleargrads()
-    l2.cleargrads()
+    model.cleargrads()
     loss.backward()
 
-    for l in [l1, l2]:
-        for p in l.params():
-            p.data -= lr * p.grad.data
+    for p in model.params():
+        p.data -= lr * p.grad.data
 
     if i % 1000 == 0:
         print(loss)
         losses.append(loss.data)
 
 # Plotting
+# Plot the dot graph
+model.plot(x)
+
 # Plot the real data as scatter points
 plt.figure(figsize=(10, 8))
 plt.scatter(x, y, label='Real Data', c='blue', alpha=0.5)
