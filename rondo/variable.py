@@ -54,8 +54,10 @@ class Variable:
         return rondo.functions.rdiv(self, other)
 
     def __pow__(self, other):
-        from rondo.functions import pow
-        return pow(self, other)
+        return rondo.functions.pow(self, other)
+
+    def __getitem__(self, slices):
+        return rondo.functions.get_item(self, slices)
 
     @property
     def shape(self):
