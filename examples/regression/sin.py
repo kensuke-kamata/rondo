@@ -3,28 +3,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import rondo
 import rondo.functions as F
-import rondo.layers as L
+import rondo.models as M
 
 # Generate toy dataset
 np.random.seed(0)
 x = np.random.rand(100, 1).astype(np.float32)
 y = np.sin(2 * np.pi * x) + np.random.rand(100, 1)
 
-class TwoLayerNet(rondo.Model):
-    def __init__(self, hidden_size, out_size):
-        super().__init__()
-        self.l1 = L.Linear(hidden_size)
-        self.l2 = L.Linear(out_size)
-
-    def forward(self, x):
-        h = self.l1(x)
-        h = F.sigmoid(h)
-        y = self.l2(h)
-        return y
-
-model = TwoLayerNet(10, 1)
+model = M.MLP([10, 1])
 
 lr = 0.2      # Learning rate
 iters = 10000 # Number of iterations

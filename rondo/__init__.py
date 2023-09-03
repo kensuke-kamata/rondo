@@ -13,6 +13,7 @@ from rondo.variable import as_variable
 
 from rondo import functions
 from rondo import layers
+from rondo import models
 from rondo import utils
 
 __version__ = '0.0.0'
