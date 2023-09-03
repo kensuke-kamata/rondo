@@ -1,9 +1,8 @@
 import numpy as np
 
 import rondo
-from rondo.function import Function
 
-class Sigmoid(Function):
+class Sigmoid(rondo.Function):
     def forward(self, x):
         y = 1 / (1 + np.exp(-x))
         return y
