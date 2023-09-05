@@ -10,7 +10,6 @@ class MeanSquaredError(Function):
     def backward(self, gy):
         x0, x1 = self.inputs
         diff = x0 - x1
-        gy = rondo.functions.broadcast_to(gy, diff.shape)
         gx0 = gy * diff * (2. / len(diff))
         gx1 = -gx0
         return gx0, gx1
