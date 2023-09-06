@@ -18,6 +18,7 @@ from rondo import functions
 from rondo import layers
 from rondo import models
 from rondo import optimizers
+from rondo import transforms
 from rondo import utils
 
 __version__ = '0.0.0'
