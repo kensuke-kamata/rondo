@@ -2,6 +2,7 @@ from rondo.config import Config
 from rondo.config import using
 from rondo.config import no_grad
 
+from rondo.dataloader import DataLoader
 from rondo.dataset import Dataset
 from rondo.function import Function
 from rondo.layer import Layer
