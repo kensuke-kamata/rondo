@@ -14,8 +14,8 @@ hidden_size = 10
 lr = 1.0
 
 # Data
-x, t = D.get_spiral(train=True)
-data_size = len(x)
+train_set = D.Spiral(train=True)
+data_size = len(train_set)
 max_iter = math.ceil(data_size / batch_size)
 
 # Model/Optimizer
@@ -32,8 +32,9 @@ for epoch in range(max_epoch):
     for i in range(max_iter):
         # Get batch
         batch_index = index[i * batch_size:(i + 1) * batch_size]
-        batch_x = x[batch_index]
-        batch_t = t[batch_index]
+        batch = [train_set[i] for i in batch_index]
+        batch_x = np.array([example[0] for example in batch])
+        batch_t = np.array([example[1] for example in batch])
 
         # Forward
         y = model(batch_x)
@@ -57,6 +58,8 @@ for epoch in range(max_epoch):
 
 # Plotting the decision boundary
 h = 0.01  # step size in the mesh
+x = np.array([sample[0] for sample in train_set])
+t = np.array([sample[1] for sample in train_set])
 x_min, x_max = x[:, 0].min() - .5, x[:, 0].max() + .5
 y_min, y_max = x[:, 1].min() - .5, x[:, 1].max() + .5
 xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
