@@ -1,7 +1,7 @@
 import numpy as np
 
 class Dataset:
-    def __init__(self, train=True, transform_x=None, transform_t=None) -> None:
+    def __init__(self, train=True, transform_x=None, transform_t=None):
         self.train = train
         self.transform_x = transform_x
         self.transform_t = transform_t
