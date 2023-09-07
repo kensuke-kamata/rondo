@@ -2,5 +2,6 @@
 .vscode
 .venv
 .graph
+.cache
 __pycache__
 playground
