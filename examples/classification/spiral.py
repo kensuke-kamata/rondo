@@ -2,6 +2,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+import rondo
 import rondo.datasets as D
 import rondo.functions as F
 import rondo.models as M
@@ -15,30 +16,26 @@ lr = 1.0
 
 # Data
 train_set = D.Spiral(train=True)
-data_size = len(train_set)
-max_iter = math.ceil(data_size / batch_size)
+test_set  = D.Spiral(train=False)
+train_loader = rondo.DataLoader(train_set, batch_size, shuffle=True)
+test_loader  = rondo.DataLoader(test_set,  batch_size, shuffle=False)
 
 # Model/Optimizer
 model = M.MLP([hidden_size, 3])
 optimizer = O.SGD(lr).setup(model)
 
-# Training
-losses = []
+train_losses = []
+train_accs   = []
+test_losses  = []
+test_accs    = []
 for epoch in range(max_epoch):
-    # Shuffle index for data
-    index = np.random.permutation(data_size)
-    sum_loss = 0
-
-    for i in range(max_iter):
-        # Get batch
-        batch_index = index[i * batch_size:(i + 1) * batch_size]
-        batch = [train_set[i] for i in batch_index]
-        batch_x = np.array([example[0] for example in batch])
-        batch_t = np.array([example[1] for example in batch])
-
+    # Training
+    sum_loss, sum_acc = 0, 0
+    for x, t in train_loader:
         # Forward
-        y = model(batch_x)
-        loss = F.softmax_cross_entropy(y, batch_t)
+        y = model(x)
+        loss = F.softmax_cross_entropy(y, t)
+        acc  = F.accuracy(y, t)
 
         # Backward
         model.cleargrads()
@@ -48,13 +45,37 @@ for epoch in range(max_epoch):
         optimizer.update()
 
         # Accumulate loss
-        sum_loss += float(loss.data) * len(batch_t)
+        sum_loss += float(loss.data) * len(t)
+        sum_acc  += float(acc.data)  * len(t)
 
     # Print loss every epoch
-    avg_loss = sum_loss / data_size
-    print('epoch %d, loss %.2f' % (epoch + 1, avg_loss))
+    avg_loss = sum_loss / len(train_set)
+    avg_acc  = sum_acc  / len(train_set)
+    print('epoch: {}'.format(epoch+1))
+    print('train loss: {:.4f}, accuracy: {:.4f}'.format(avg_loss, avg_acc))
 
-    losses.append(avg_loss)
+    train_losses.append(avg_loss)
+    train_accs.append(avg_acc)
+
+    # Evaluation
+    sum_loss, sum_acc = 0, 0
+    with rondo.no_grad():
+        for x, t in test_loader:
+            # Forward
+            y = model(x)
+            loss = F.softmax_cross_entropy(y, t)
+            acc  = F.accuracy(y, t)
+
+            # Accumulate loss
+            sum_loss += float(loss.data) * len(t)
+            sum_acc  += float(acc.data)  * len(t)
+
+    avg_loss = sum_loss / len(test_set)
+    avg_acc  = sum_acc  / len(test_set)
+    print('test loss: {:.4f}, accuracy: {:.4f}'.format(avg_loss, avg_acc))
+
+    test_losses.append(avg_loss)
+    test_accs.append(avg_acc)
 
 # Plotting the decision boundary
 h = 0.01  # step size in the mesh
@@ -78,8 +99,16 @@ plt.xlim(xx.min(), xx.max())
 plt.ylim(yy.min(), yy.max())
 plt.show()
 
-# Plotting
-plt.plot(losses)
+# Plotting losses over training
+plt.plot(range(max_epoch), train_losses, label="Training Loss", color='blue')
+plt.plot(range(max_epoch), test_losses, label="Test Loss", color='orange')
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
+plt.show()
+
+# Plotting accuracies over training
+plt.plot(range(max_epoch), train_accs, label="Training Accuracy", color='blue')
+plt.plot(range(max_epoch), test_accs, label="Test Accuracy", color='orange')
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
 plt.show()
