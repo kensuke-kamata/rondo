@@ -1,5 +1,3 @@
-from typing import Any
-
 class Compose:
     """Composes several transforms together."""
     def __init__(self, transforms=[]):
