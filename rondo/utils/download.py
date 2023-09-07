@@ -22,7 +22,7 @@ def download(url, filename=None):
         raise e
     print('Done')
 
-    return filename
+    return filepath
 
 def progress(block_num, block_size, total_size):
     p = min(1.0, float(block_num * block_size) / total_size)
