@@ -2,10 +2,10 @@ import math
 import numpy as np
 
 class DataLoader:
-    def __init__(self, dataset, batchsize, shuffule=True):
+    def __init__(self, dataset, batchsize, shuffle=True):
         self.dataset = dataset
         self.batchsize = batchsize
-        self.shuffle = shuffule
+        self.shuffle = shuffle
         self.datasize = len(dataset)
         self.maxiter = math.ceil(self.datasize / batchsize)
 
