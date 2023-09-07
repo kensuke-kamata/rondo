@@ -9,6 +9,8 @@ from rondo.functions.array.transpose import transpose
 
 from rondo.functions.connection.linear import linear
 
+from rondo.functions.evaluation.accuracy import accuracy
+
 from rondo.functions.loss.mean_squared_error import mean_squared_error
 from rondo.functions.loss.softmax_cross_entropy import softmax_cross_entropy
 
