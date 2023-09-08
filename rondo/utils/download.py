@@ -13,14 +13,13 @@ def download(url, filename=None):
     if os.path.exists(filepath):
         return filepath
 
-    print(f'Downloading {filename}')
+    print(f'Download: {filename}')
     try:
         urllib.request.urlretrieve(url, filepath, progress)
     except (Exception, KeyboardInterrupt) as e:
         if os.path.exists(filepath):
             os.remove(filepath)
         raise e
-    print('Done')
 
     return filepath
 
