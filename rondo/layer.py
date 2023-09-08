@@ -33,3 +33,12 @@ class Layer:
     def cleargrads(self):
         for param in self.params():
             param.cleargrad()
+
+    def _flatten(self, dict, parentkey):
+        for name in self._params:
+            obj = self.__dict__[name]
+            key = f'{parentkey}/{name}' if parentkey else name
+            if isinstance(obj, Layer):
+                obj._flatten(dict, key)
+            else:
+                dict[key] = obj
