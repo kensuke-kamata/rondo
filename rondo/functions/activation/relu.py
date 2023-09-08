@@ -8,7 +8,7 @@ class ReLU(rondo.Function):
         return y
 
     def backward(self, gy):
-        x, = self.input
+        x, = self.inputs
         mask = x.data > 0
         gx = gy * mask
         return gx
