@@ -1,7 +1,7 @@
 class Compose:
     """Composes several transforms together."""
     def __init__(self, transforms=[]):
-        self.transforms = []
+        self.transforms = transforms
 
     def __call__(self, img):
         if not self.transforms:
