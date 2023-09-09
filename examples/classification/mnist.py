@@ -16,7 +16,7 @@ train_loader = rondo.DataLoader(train_set, batch_size)
 test_loader = rondo.DataLoader(test_set, batch_size, shuffle=False)
 
 model = rondo.models.MLP([hidden_size, hidden_size, 10], activation=F.relu)
-optimizer = rondo.optimizers.MomentumSGD().setup(model)
+optimizer = rondo.optimizers.AdaGrad().setup(model)
 
 path = '.cache/mnist.npz'
 if os.path.exists(path):
