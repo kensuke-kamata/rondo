@@ -2,6 +2,7 @@ import contextlib
 
 class Config:
     enable_backprop = True
+    train = True
 
 @contextlib.contextmanager
 def using(name, value):
@@ -14,3 +15,6 @@ def using(name, value):
 
 def no_grad():
     return using('enable_backprop', False)
+
+def test_mode():
+    return using('train', False)
