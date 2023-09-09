@@ -10,9 +10,9 @@ class AdaGrad(rondo.Optimizer):
         self.hs = {}
 
     def update_param(self, param):
-        grad = param.grad.data
-        if grad is None:
+        if param.grad is None:
             return
+        grad = param.grad.data
 
         h_key = id(param)
         if h_key not in self.hs:
