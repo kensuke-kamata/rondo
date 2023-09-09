@@ -31,3 +31,5 @@ from rondo.functions.math.trigonometry import sin
 from rondo.functions.math.trigonometry import taylor_sin
 from rondo.functions.math.trigonometry import cos
 from rondo.functions.math.trigonometry import tanh
+
+from rondo.functions.noise.dropout import dropout
