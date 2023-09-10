@@ -11,6 +11,7 @@ from rondo.functions.array.transpose import transpose
 
 from rondo.functions.connection.linear import linear
 from rondo.functions.connection.conv2d import conv2d
+from rondo.functions.connection.conv2d import conv2d_gradW
 from rondo.functions.connection.deconv2d import deconv2d
 
 from rondo.functions.evaluation.accuracy import accuracy
@@ -37,3 +38,4 @@ from rondo.functions.math.trigonometry import cos
 from rondo.functions.math.trigonometry import tanh
 
 from rondo.functions.noise.dropout import dropout
+

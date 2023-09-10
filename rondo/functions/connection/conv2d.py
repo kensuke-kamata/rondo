@@ -24,13 +24,8 @@ class Conv2d(rondo.Function):
 
     def backward(self, gy):
         x, W, b = self.inputs
-        # gx
         gx = F.deconv2d(gy, W, b=None, stride=self.stride, pad=self.pad, outsize=(x.shape[2], x.shape[3]))
-
-        # gW
-        gW = Conv2dGradW(self)(x, gy)
-
-        # gb
+        gW = conv2d_gradW(self, x, gy)
         gb = None
         if b.data is not None:
             gb = gy.sum(axis=(0, 2, 3))
@@ -62,3 +57,6 @@ class Conv2dGradW(rondo.Function):
         gx = F.deconv2d(gy, gW, stride=self.stride, pad=self.pad, outsize=(xh, xw))
         ggy = F.conv2d(x, gW, stride=self.stride, pad=self.pad)
         return gx, ggy
+
+def conv2d_gradW(creator, x, gy):
+    return Conv2dGradW(creator)(x, gy)
