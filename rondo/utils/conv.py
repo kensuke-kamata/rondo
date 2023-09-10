@@ -1,14 +1,24 @@
 import numpy as np
 
-def get_conv_outsize(input, kernel, stride=1, pad=0):
+def get_conv_outsize(size, kernel, stride, pad):
     """
     Args:
-        input  (int): The size of input feature map.
+        size   (int): The size of input feature map.
         kernel (int): The size of convolution kernel.
         stride (int): The size of stride.
         pad    (int): The size of padding.
     """
-    return (input + pad * 2 - kernel) // stride + 1
+    return (size + pad * 2 - kernel) // stride + 1
+
+def get_deconv_outsize(size, kernel, stride, pad):
+    """
+    Args:
+        size   (int): The size of input feature map.
+        kernel (int): The size of convolution kernel.
+        stride (int): The size of stride.
+        pad    (int): The size of padding.
+    """
+    return stride * (size - 1) + kernel - 2 * pad
 
 def pair(x):
     if isinstance(x, int):
