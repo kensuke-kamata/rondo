@@ -4,6 +4,8 @@ from rondo.functions.activation.softmax import softmax
 
 from rondo.functions.array.broadcast import broadcast_to
 from rondo.functions.array.get_item import get_item
+from rondo.functions.array.im2col import im2col
+from rondo.functions.array.im2col import col2im
 from rondo.functions.array.reshape import reshape
 from rondo.functions.array.transpose import transpose
 
