@@ -39,3 +39,4 @@ from rondo.functions.math.trigonometry import tanh
 
 from rondo.functions.noise.dropout import dropout
 
+from rondo.functions.pooling.pooling_max_2d import pooling_max_2d
