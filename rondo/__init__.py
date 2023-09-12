@@ -15,6 +15,7 @@ from rondo.variable import Parameter
 from rondo.variable import as_array
 from rondo.variable import as_variable
 
+from rondo import dataloaders
 from rondo import datasets
 from rondo import functions
 from rondo import layers
