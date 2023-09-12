@@ -24,4 +24,4 @@ from rondo import optimizers
 from rondo import transforms
 from rondo import utils
 
-__version__ = '0.0.0'
+__version__ = '0.0.1'
